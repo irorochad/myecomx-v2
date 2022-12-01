@@ -1,4 +1,8 @@
 import { useState } from "react";
+import {
+  createAuthUserWithEmailAndPassword,
+  createUserDocumentFromAuth,
+} from "../../utils/firebase/firebase.utils";
 
 const defaultValues = {
   displayName: "",
@@ -11,7 +15,44 @@ const SignUpForm = () => {
   const [formFields, setformFields] = useState(defaultValues);
   const { displayName, email, password, confirmPassword } = formFields;
 
+  // When the user account get created, clear the form fields.
+
+  const clearFormFields = () => {
+    setformFields(defaultValues);
+  };
   console.log(formFields);
+
+  // This function handles the email and password signup form when the button is clicked
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    // If the password does not match, alert an error.
+    if (password !== confirmPassword) {
+      alert("Passwords doesn't match");
+      return;
+    }
+    try {
+      const { user } = await createAuthUserWithEmailAndPassword(
+        email,
+        password
+      );
+      // Create the document in the firestore
+      await createUserDocumentFromAuth(user, { displayName });
+      
+      // Call the clear form field func to clear the form.
+      clearFormFields();
+    } catch (error) {
+      // Found an error? Console it.
+      if (error.code == "auth/email-already-in-use") {
+        alert("Email already in use.");
+      }
+      if (error.code == "auth/weak-password") {
+        alert("Weak Password, Password should be at least 6 letters");
+      } else {
+        console.log("We had an issue creating your account", error);
+      }
+    }
+  };
+  // this func check to see if any of the inputs has been changed.
   const handleChange = (event) => {
     const { name, value } = event.target;
 
@@ -20,7 +61,7 @@ const SignUpForm = () => {
   return (
     <div>
       <h1>Signup with your email and password</h1>
-      <form onSubmit={() => {}}>
+      <form onSubmit={handleSubmit}>
         <label htmlFor="">Display Name</label>
         <input
           type="text"
