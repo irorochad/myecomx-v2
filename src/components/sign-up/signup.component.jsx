@@ -6,6 +6,8 @@ import {
 
 import FormInput from "../form-input/form-input.component";
 
+// import SignInForm from "../sign-in/sign-in.component";
+
 import Button from "../button/button.component";
 
 import "./sign-up.styles.scss";
@@ -107,6 +109,8 @@ const SignUpForm = () => {
 
         <Button type="submit">Sign Up</Button>
       </form>
+
+      {/* <SignInForm /> */}
     </div>
   );
 };
