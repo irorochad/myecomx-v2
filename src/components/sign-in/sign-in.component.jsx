@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import {
   signInWithGooglePopup,
   createUserDocumentFromAuth,
@@ -8,6 +8,8 @@ import {
 import FormInput from "../form-input/form-input.component";
 
 import Button from "../button/button.component";
+
+import { UserContext } from "../../context/user.context";
 
 import "./sign-in.styles.scss";
 
@@ -21,19 +23,20 @@ const SignIn = () => {
   const { email, password } = formFields;
 
   // When the user account get created, clear the form fields.
-
   const clearFormFields = () => {
     setformFields(defaultValues);
   };
-  console.log(formFields);
 
+  // To get the useContext ...
+  const { setCurrentUser } = useContext(UserContext);
   // This function handles the email and password signup form when the button is clicked
   const handleSubmit = async (event) => {
     event.preventDefault();
 
     try {
-      const response = await emailAndPasswordSignIn(email, password);
-      console.log(response.user);
+      const { user } = await emailAndPasswordSignIn(email, password);
+
+      setCurrentUser(user);
 
       clearFormFields();
     } catch (error) {
