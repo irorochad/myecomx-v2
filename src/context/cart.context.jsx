@@ -6,7 +6,7 @@ export const CartModalContext = createContext({
 });
 
 export const CartModalProiver = ({ children }) => {
-  const [isCartOpen, setisCartOpen] = useState(CartModalContext);
+  const [isCartOpen, setisCartOpen] = useState(false);
   const value = { isCartOpen, setisCartOpen };
   return (
     <CartModalContext.Provider value={value}>
