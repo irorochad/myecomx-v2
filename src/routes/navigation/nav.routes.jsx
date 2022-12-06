@@ -9,12 +9,7 @@ import "./navigation.styles.scss";
 import { ReactComponent as NavLogo } from "../../assets/logo.svg";
 
 const Navigation = () => {
-  const { currentUser, setCurrentUser } = useContext(UserContext);
-
-  const logoutHandler = async () => {
-    await SignOutUser;
-    setCurrentUser(null);
-  };
+  const { currentUser } = useContext(UserContext);
 
   return (
     <>
@@ -29,7 +24,7 @@ const Navigation = () => {
           {
             // If the current user is set, show a logout link, else show the login page
             currentUser ? (
-              <Link to="/auth" className="nav-link" onClick={logoutHandler}>
+              <Link to="/auth" className="nav-link" onClick={SignOutUser}>
                 LOGOUT
               </Link>
             ) : (

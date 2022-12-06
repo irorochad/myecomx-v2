@@ -1,12 +1,10 @@
-import { useState, useContext } from "react";
+import { useState } from "react";
 import {
   createAuthUserWithEmailAndPassword,
   createUserDocumentFromAuth,
 } from "../../utils/firebase/firebase.utils";
 
 import FormInput from "../form-input/form-input.component";
-import { UserContext } from "../../context/user.context";
-
 import Button from "../button/button.component";
 
 import "./sign-up.styles.scss";
@@ -26,8 +24,7 @@ const SignUpForm = () => {
   const clearFormFields = () => {
     setformFields(defaultValues);
   };
-  // The UserContext function to save the user Data
-  const { setCurrentUser } = useContext(UserContext);
+
   // This function handles the email and password signup form when the button is clicked
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -47,9 +44,6 @@ const SignUpForm = () => {
 
       // Call the clear form field func to clear the form.
       clearFormFields();
-
-      // Log the current user details.
-      setCurrentUser(user);
     } catch (error) {
       // Found an error? Console it.
       if (error.code === "auth/email-already-in-use") {
