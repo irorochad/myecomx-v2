@@ -40,6 +40,7 @@ const Navigation = () => {
           }
           <CartIcon />
         </div>
+        {/* If this isCartOpen is true, show the cartDropDown */}
         {isCartOpen && <CartDropDown />}
       </div>
       <Outlet />
