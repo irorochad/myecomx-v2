@@ -3,6 +3,13 @@
   grid-template-columns: repeat(1, 1fr);
   column-gap: 10px;
   row-gap: 50px;
+
+}
+
+.categoryTitle {
+  font-size: 38px;
+  margin-bottom: 15px;
+  text-align: center;
 }
 // Ipad
 @media only screen and (min-width: 768px) {

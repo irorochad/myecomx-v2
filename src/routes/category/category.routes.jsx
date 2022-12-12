@@ -17,12 +17,15 @@ const Category = () => {
   }, [category, categoriesMap]);
 
   return (
+    <>
+     <h2 className="categoryTitle">{category.toLocaleUpperCase()}</h2>
     <div className="category-container">
       {products &&
         products.map((product) => (
           <ProductCard key={product.id} products={product} />
         ))}
     </div>
+    </>
   );
 };
 
