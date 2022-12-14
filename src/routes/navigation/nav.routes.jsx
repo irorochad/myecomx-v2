@@ -1,12 +1,18 @@
 import { useContext } from "react";
-import { Outlet, Link } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 
 import { UserContext } from "../../context/user.context";
 import { CartModalContext } from "../../context/cart.context";
 
 import { SignOutUser } from "../../utils/firebase/firebase.utils";
 
-import "./navigation.styles.scss";
+// styled-componenets imports
+import {
+  NavigationContainer,
+  LogoContainer,
+  NavLinks,
+  NavLink,
+} from "./navigation.styles";
 
 import { ReactComponent as NavLogo } from "../../assets/logo.svg";
 import CartIcon from "../../components/cart-icon/cart-icon.component";
@@ -18,31 +24,27 @@ const Navigation = () => {
 
   return (
     <>
-      <div className="nav-container">
-        <Link to="/" className="logo-container">
+      <NavigationContainer>
+        <LogoContainer to="/">
           <NavLogo className="logo" />
-        </Link>
-        <div className="nav-links-container">
-          <Link to="/shop" className="nav-link">
-            SHOP
-          </Link>
+        </LogoContainer>
+        <NavLinks>
+          <NavLink to="/shop">SHOP</NavLink>
           {
             // If the current user is set, show a logout link, else show the login page
             currentUser ? (
-              <Link to="/auth" className="nav-link" onClick={SignOutUser}>
+              <NavLink to="/auth" onClick={SignOutUser}>
                 LOGOUT
-              </Link>
+              </NavLink>
             ) : (
-              <Link to="/auth" className="nav-link">
-                LOGIN
-              </Link>
+              <NavLink to="/auth">LOGIN</NavLink>
             )
           }
           <CartIcon />
-        </div>
+        </NavLinks>
         {/* If this isCartOpen is true, show the cartDropDown */}
         {isCartOpen && <CartDropDown />}
-      </div>
+      </NavigationContainer>
       <Outlet />
     </>
   );
