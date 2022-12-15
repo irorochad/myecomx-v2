@@ -1,6 +1,13 @@
 .categories-container {
     width: 100%;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
   }
+
+// Ipad screens up wards.
+  @media only screen and (min-width: 768px) {
+    .categories-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+    }
+  }
+
