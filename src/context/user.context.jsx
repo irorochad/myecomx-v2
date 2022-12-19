@@ -1,16 +1,19 @@
-import { createContext, useReducer, useEffect } from "react";
+import { createContext, useEffect, useReducer } from 'react';
 
-import { onAuthStateChangedListner } from "../utils/firebase/firebase.utils";
+import { createAction } from '../utils/reducer/reducer.utils';
+
+import {
+  onAuthStateChangedListner,
+  createUserDocumentFromAuth,
+} from '../utils/firebase/firebase.utils';
 
 export const UserContext = createContext({
-  /* an object should be null at first, cuz an empty object will also be rendered as true. 
-  So Null, is fine */
-  currentUser: null,
   setCurrentUser: () => null,
+  currentUser: null,
 });
 
 export const USER_ACTION_TYPES = {
-  SET_CURRENT_USER: "SET_CURRENT_USER",
+  SET_CURRENT_USER: 'SET_CURRENT_USER',
 };
 
 const INITIAL_STATE = {
@@ -30,19 +33,26 @@ const userReducer = (state, action) => {
 
 export const Userprovider = ({ children }) => {
   const [{ currentUser }, dispatch] = useReducer(userReducer, INITIAL_STATE);
-  console.log(currentUser);
 
   const setCurrentUser = (user) =>
-    dispatch({ type: USER_ACTION_TYPES.SET_CURRENT_USER, currentUser: user });
+    dispatch(createAction(USER_ACTION_TYPES.SET_CURRENT_USER, user));
 
   useEffect(() => {
-    const unsubsribe = onAuthStateChangedListner((user) => {
-      console.log(user);
+    const unsubscribe = onAuthStateChangedListner((user) => {
+      if (user) {
+        createUserDocumentFromAuth(user);
+      }
       setCurrentUser(user);
     });
-    return unsubsribe;
+
+    return unsubscribe;
   }, []);
 
-  const value = { currentUser, setCurrentUser };
+  // console.log(currentUser);
+
+  const value = {
+    currentUser,
+  };
+
   return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
 };
