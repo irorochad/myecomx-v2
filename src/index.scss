@@ -1,6 +1,6 @@
 body {
   margin: 0;
-  padding: 20px;
+  padding: 20px 40px;
   font-family: Montserrat, 'Fira Sans', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -11,11 +11,11 @@ code {
     monospace;
 }
 
-a{
+a {
   text-decoration: none;
   color: black;
-  font-weight: 400;
 }
-*{
+
+* {
   box-sizing: border-box;
 }
